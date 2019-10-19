@@ -102,7 +102,6 @@ class Game {
       // 40tl 20%
       // 60tl 0%
       rate = (maxRate * (60 - this.price)) / 20;
-      console.log(rate, maxRate);
     }
     this.demandRate = Math.floor(Math.max(0, rate));
   };
@@ -121,8 +120,12 @@ class Game {
     this.isAutoBuyerActive = false;
   };
 
+  didUnlockAutoBuyer = () => {
+    return this.manufacturedCigKofte > 2000;
+  };
+
   canBuyAutoBuyer = () => {
-    return this.manufacturedCigKofte > 2000 && this.money >= this.autoBuyerCost;
+    return this.didUnlockAutoBuyer() && this.money >= this.autoBuyerCost;
   };
 
   canBuyAutoGenerator = type => {

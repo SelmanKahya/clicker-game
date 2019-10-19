@@ -92,26 +92,27 @@ class App extends React.Component {
                   </button>
                 </td>
               </tr>
-              {this.game.canBuyAutoBuyer() && (
-                <tr>
-                  <td>Satın alma müdürü:</td>
-                  <td>
-                    {this.game.hasAutoBuyer ? (
-                      <React.Fragment>
-                        <button
-                          style={{ marginLeft: "10px" }}
-                          onClick={
-                            this.game.isAutoBuyerActive
-                              ? this.game.stopAutoBuyer
-                              : this.game.startAutoBuyer
-                          }
-                        >
-                          {this.isAutoBuyerActive ? "Durdur" : "Devam et"}
-                        </button>
-                      </React.Fragment>
-                    ) : (
-                      <span>
-                        Yok
+              <tr>
+                <td>Satınalma müdürü:</td>
+                <td>
+                  {this.game.hasAutoBuyer ? (
+                    <React.Fragment>
+                      {this.game.isAutoBuyerActive ? "Aktif" : "Durdu"}
+                      <button
+                        style={{ marginLeft: "10px" }}
+                        onClick={
+                          this.game.isAutoBuyerActive
+                            ? this.game.stopAutoBuyer
+                            : this.game.startAutoBuyer
+                        }
+                      >
+                        {this.game.isAutoBuyerActive ? "Durdur" : "Devam et"}
+                      </button>
+                    </React.Fragment>
+                  ) : (
+                    <span>
+                      Yok
+                      {this.game.didUnlockAutoBuyer() && (
                         <button
                           style={{ marginLeft: "10px" }}
                           disabled={!this.game.canBuyAutoBuyer()}
@@ -119,11 +120,11 @@ class App extends React.Component {
                         >
                           Satin Al! ({this.game.autoBuyerCost}₺)
                         </button>
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              )}
+                      )}
+                    </span>
+                  )}
+                </td>
+              </tr>
             </table>
             <div style={{ marginTop: "16px" }}>
               <div>Çalışan:</div>
