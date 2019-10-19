@@ -51,17 +51,17 @@ class App extends React.Component {
                 <td>
                   {this.game.price}₺
                   <button
-                    style={{ marginLeft: "20px" }}
-                    onClick={this.game.increasePrice}
-                  >
-                    +
-                  </button>
-                  <button
                     disabled={!this.game.canDecreasePrice()}
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "20px" }}
                     onClick={this.game.decreasePrice}
                   >
                     -
+                  </button>
+                  <button
+                    style={{ marginLeft: "10px" }}
+                    onClick={this.game.increasePrice}
+                  >
+                    +
                   </button>
                 </td>
               </tr>

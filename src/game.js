@@ -20,13 +20,13 @@ class Game {
   // generators
   autoGenerators = {
     errandBoy: 0,
-    errandBoyCost: 100,
+    errandBoyCost: 1000,
     errandBoyManufactureRate: 1,
     foreman: 0,
-    foremanCost: 500,
+    foremanCost: 5000,
     foremanManufactureRate: 6,
     master: 0,
-    masterCost: 2000,
+    masterCost: 20000,
     masterManufactureRate: 15
   };
   autoGeneratorsLastGeneratedAt = Date.now();
@@ -209,6 +209,9 @@ class Game {
   };
 
   decreasePrice = () => {
+    if (this.price === 1) {
+      return;
+    }
     this.price -= 1;
   };
 }
