@@ -89,12 +89,16 @@ class Game {
   };
 
   updateDemand = () => {
-    // 2 / sqrt(x)
-    // 2 / 1          200%
-    // 1 / 4          100%
-    // 1 / 100        10%
-    const rate = (2 / Math.sqrt(this.price)) * 100;
-    console.log(rate);
+    let rate;
+    if (this.price <= 40) {
+      rate = (2 / Math.sqrt(this.price)) * 100;
+    } else {
+      const maxRate = (2 / Math.sqrt(40)) * 100;
+      // 40tl 20%
+      // 60tl 0%
+      rate = (maxRate * (60 - this.price)) / 20;
+      console.log(rate, maxRate);
+    }
     this.demandRate = Math.floor(Math.max(0, rate));
   };
 
@@ -104,7 +108,7 @@ class Game {
   };
 
   canBuyAutoBuyer = () => {
-    return this.manufacturedCigKofte > 2000;
+    return this.manufacturedCigKofte > 2000 && this.money >= this.autoBuyerCost;
   };
 
   canBuyAutoGenerator = type => {
@@ -133,6 +137,9 @@ class Game {
   };
 
   buyMaterial = () => {
+    if (this.canBuyMaterial()) {
+      return;
+    }
     this.materialCost += Math.floor(Math.random() * 20 + 10);
     this.materialCostLastUpdated = Date.now();
 
@@ -141,11 +148,17 @@ class Game {
   };
 
   buyAutoBuyer = () => {
+    if (this.canBuyAutoBuyer()) {
+      return;
+    }
     this.money -= this.autoBuyerCost;
     this.hasAutoBuyer = true;
   };
 
   buyAutoGenerator = type => {
+    if (!this.canBuyAutoGenerator(type)) {
+      return;
+    }
     switch (type) {
       case "ERRAND_BOY":
         this.autoGenerators.errandBoy++;
