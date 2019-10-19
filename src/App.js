@@ -96,15 +96,30 @@ class App extends React.Component {
                 <tr>
                   <td>Satın alma müdürü:</td>
                   <td>
-                    {this.game.hasAutoBuyer ? "Aktif" : "Yok"}
-                    {!this.game.hasAutoBuyer && (
-                      <button
-                        style={{ marginLeft: "10px" }}
-                        disabled={!this.game.canBuyAutoBuyer()}
-                        onClick={this.game.buyAutoBuyer}
-                      >
-                        Satin Al! ({this.game.autoBuyerCost}₺)
-                      </button>
+                    {this.game.hasAutoBuyer ? (
+                      <React.Fragment>
+                        <button
+                          style={{ marginLeft: "10px" }}
+                          onClick={
+                            this.game.isAutoBuyerActive
+                              ? this.game.stopAutoBuyer
+                              : this.game.startAutoBuyer
+                          }
+                        >
+                          {this.isAutoBuyerActive ? "Durdur" : "Devam et"}
+                        </button>
+                      </React.Fragment>
+                    ) : (
+                      <span>
+                        Yok
+                        <button
+                          style={{ marginLeft: "10px" }}
+                          disabled={!this.game.canBuyAutoBuyer()}
+                          onClick={this.game.buyAutoBuyer}
+                        >
+                          Satin Al! ({this.game.autoBuyerCost}₺)
+                        </button>
+                      </span>
                     )}
                   </td>
                 </tr>

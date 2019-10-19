@@ -33,6 +33,7 @@ class Game {
 
   // auto buyer
   hasAutoBuyer = false;
+  isAutoBuyerActive = false;
   autoBuyerCost = 15000;
 
   makeCigKofte = (count = 1) => {
@@ -60,7 +61,11 @@ class Game {
     }
 
     // auto buyer
-    if (this.hasAutoBuyer && this.material < 500 && this.canBuyMaterial()) {
+    if (
+      this.isAutoBuyerActive &&
+      this.material < 500 &&
+      this.canBuyMaterial()
+    ) {
       this.buyMaterial();
     }
 
@@ -107,6 +112,15 @@ class Game {
     this.money += this.price;
   };
 
+  startAutoBuyer = () => {
+    if (this.hasAutoBuyer) {
+      this.isAutoBuyerActive = true;
+    }
+  };
+  stopAutoBuyer = () => {
+    this.isAutoBuyerActive = false;
+  };
+
   canBuyAutoBuyer = () => {
     return this.manufacturedCigKofte > 2000 && this.money >= this.autoBuyerCost;
   };
@@ -137,7 +151,7 @@ class Game {
   };
 
   buyMaterial = () => {
-    if (this.canBuyMaterial()) {
+    if (!this.canBuyMaterial()) {
       return;
     }
     this.materialCost += Math.floor(Math.random() * 20 + 10);
@@ -148,11 +162,12 @@ class Game {
   };
 
   buyAutoBuyer = () => {
-    if (this.canBuyAutoBuyer()) {
+    if (!this.canBuyAutoBuyer()) {
       return;
     }
     this.money -= this.autoBuyerCost;
     this.hasAutoBuyer = true;
+    this.isAutoBuyerActive = true;
   };
 
   buyAutoGenerator = type => {
