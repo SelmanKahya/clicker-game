@@ -76,7 +76,7 @@ class App extends React.Component {
             <hr />
             <table>
               <tr>
-                <td style={{ width: "150px" }}>Çiğ köfte / saniye:</td>
+                <td style={{ width: "150px" }}>Çiğ köfte / dakika:</td>
                 <td>{this.game.lastManufacturedRate}</td>
               </tr>
               <tr>
