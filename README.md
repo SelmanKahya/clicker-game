@@ -1,3 +1,6 @@
+Implemented on a live-stream:
+https://www.youtube.com/watch?v=kVKDc2yX0Bc
+
 ## Instructions
 
 ```
