@@ -1,21 +1,21 @@
 class Game {
-  demandRate = 0;
-  material = 10000;
-  money = 0;
-  price = 10;
-  currentCigKofte = 0;
-  manufacturedCigKofte = 0;
-  soldCigKofte = 0;
-  unitMaterialCost = 100;
+  demandRate = 0
+  material = 10000
+  money = 0
+  price = 10
+  currentCigKofte = 0
+  manufacturedCigKofte = 0
+  soldCigKofte = 0
+  unitMaterialCost = 100
 
   // manufacture rate
-  lastManufacturedCount = 0;
-  lastManufacturedRate = 0;
-  lastManufacturedRateTs = Date.now();
+  lastManufacturedCount = 0
+  lastManufacturedRate = 0
+  lastManufacturedRateTs = Date.now()
 
   // price of the material
-  materialCost = 500;
-  materialCostLastUpdated = Date.now();
+  materialCost = 500
+  materialCostLastUpdated = Date.now()
 
   // generators
   autoGenerators = {
@@ -28,21 +28,21 @@ class Game {
     master: 0,
     masterCost: 20000,
     masterManufactureRate: 15
-  };
-  autoGeneratorsLastGeneratedAt = Date.now();
+  }
+  autoGeneratorsLastGeneratedAt = Date.now()
 
   // auto buyer
-  hasAutoBuyer = false;
-  isAutoBuyerActive = false;
-  autoBuyerCost = 15000;
+  hasAutoBuyer = false
+  isAutoBuyerActive = false
+  autoBuyerCost = 15000
 
   makeCigKofte = (count = 1) => {
     if (this.canMakeCigKofte(count)) {
-      this.currentCigKofte += count;
-      this.manufacturedCigKofte += count;
-      this.material -= this.unitMaterialCost * count;
+      this.currentCigKofte += count
+      this.manufacturedCigKofte += count
+      this.material -= this.unitMaterialCost * count
     }
-  };
+  }
 
   update = () => {
     // generate new goods
@@ -50,14 +50,14 @@ class Game {
       this.makeCigKofte(
         this.autoGenerators.errandBoy *
           this.autoGenerators.errandBoyManufactureRate
-      );
+      )
       this.makeCigKofte(
         this.autoGenerators.foreman * this.autoGenerators.foremanManufactureRate
-      );
+      )
       this.makeCigKofte(
         this.autoGenerators.master * this.autoGenerators.masterManufactureRate
-      );
-      this.autoGeneratorsLastGeneratedAt = Date.now();
+      )
+      this.autoGeneratorsLastGeneratedAt = Date.now()
     }
 
     // auto buyer
@@ -66,154 +66,154 @@ class Game {
       this.material < 500 &&
       this.canBuyMaterial()
     ) {
-      this.buyMaterial();
+      this.buyMaterial()
     }
 
     // update material cost
     if (Date.now() - this.materialCostLastUpdated > 10000) {
-      this.materialCost = Math.floor(Math.random() * 300 + 300);
-      this.materialCostLastUpdated = Date.now();
+      this.materialCost = Math.floor(Math.random() * 300 + 300)
+      this.materialCostLastUpdated = Date.now()
     }
 
     // update manufacture rate
     if (Date.now() - this.lastManufacturedRateTs > 5000) {
-      this.lastManufacturedRateTs = Date.now();
+      this.lastManufacturedRateTs = Date.now()
       this.lastManufacturedRate = Math.floor(
         (this.manufacturedCigKofte - this.lastManufacturedCount) / 5
-      );
-      this.lastManufacturedCount = this.manufacturedCigKofte;
+      )
+      this.lastManufacturedCount = this.manufacturedCigKofte
     }
 
     // update demand
-    this.updateDemand();
+    this.updateDemand()
 
     // consumers purchase goods
     if (this.currentCigKofte > 0 && Math.random() * 100 < this.demandRate) {
-      this.purchaseCigKofte();
+      this.purchaseCigKofte()
     }
-  };
+  }
 
   updateDemand = () => {
-    let rate;
+    let rate
     if (this.price <= 40) {
-      rate = (2 / Math.sqrt(this.price)) * 100;
+      rate = (2 / Math.sqrt(this.price)) * 100
     } else {
-      const maxRate = (2 / Math.sqrt(40)) * 100;
+      const maxRate = (2 / Math.sqrt(40)) * 100
       // 40tl 20%
       // 60tl 0%
-      rate = (maxRate * (60 - this.price)) / 20;
+      rate = (maxRate * (60 - this.price)) / 20
     }
-    this.demandRate = Math.floor(Math.max(0, rate));
-  };
+    this.demandRate = Math.floor(Math.max(0, rate))
+  }
 
   purchaseCigKofte = () => {
-    this.currentCigKofte -= 1;
-    this.money += this.price;
-  };
+    this.currentCigKofte -= 1
+    this.money += this.price
+  }
 
   startAutoBuyer = () => {
     if (this.hasAutoBuyer) {
-      this.isAutoBuyerActive = true;
+      this.isAutoBuyerActive = true
     }
-  };
+  }
   stopAutoBuyer = () => {
-    this.isAutoBuyerActive = false;
-  };
+    this.isAutoBuyerActive = false
+  }
 
   didUnlockAutoBuyer = () => {
-    return this.manufacturedCigKofte > 2000;
-  };
+    return this.manufacturedCigKofte > 2000
+  }
 
   canBuyAutoBuyer = () => {
-    return this.didUnlockAutoBuyer() && this.money >= this.autoBuyerCost;
-  };
+    return this.didUnlockAutoBuyer() && this.money >= this.autoBuyerCost
+  }
 
-  canBuyAutoGenerator = type => {
+  canBuyAutoGenerator = (type) => {
     switch (type) {
-      case "ERRAND_BOY":
-        return this.money >= this.autoGenerators.errandBoyCost;
-      case "FOREMAN":
-        return this.money >= this.autoGenerators.foremanCost;
-      case "MASTER":
-        return this.money >= this.autoGenerators.masterCost;
+      case 'ERRAND_BOY':
+        return this.money >= this.autoGenerators.errandBoyCost
+      case 'FOREMAN':
+        return this.money >= this.autoGenerators.foremanCost
+      case 'MASTER':
+        return this.money >= this.autoGenerators.masterCost
       default:
-        return false;
+        return false
     }
-  };
+  }
 
   canBuyMaterial = () => {
-    return this.money >= this.materialCost;
-  };
+    return this.money >= this.materialCost
+  }
 
   canMakeCigKofte = (count = 1) => {
-    return this.material >= this.unitMaterialCost * count;
-  };
+    return this.material >= this.unitMaterialCost * count
+  }
 
   canDecreasePrice = () => {
-    return this.price > 1;
-  };
+    return this.price > 1
+  }
 
   buyMaterial = () => {
     if (!this.canBuyMaterial()) {
-      return;
+      return
     }
-    this.materialCost += Math.floor(Math.random() * 20 + 10);
-    this.materialCostLastUpdated = Date.now();
+    this.materialCost += Math.floor(Math.random() * 20 + 10)
+    this.materialCostLastUpdated = Date.now()
 
-    this.material += 10000;
-    this.money -= this.materialCost;
-  };
+    this.material += 10000
+    this.money -= this.materialCost
+  }
 
   buyAutoBuyer = () => {
     if (!this.canBuyAutoBuyer()) {
-      return;
+      return
     }
-    this.money -= this.autoBuyerCost;
-    this.hasAutoBuyer = true;
-    this.isAutoBuyerActive = true;
-  };
+    this.money -= this.autoBuyerCost
+    this.hasAutoBuyer = true
+    this.isAutoBuyerActive = true
+  }
 
-  buyAutoGenerator = type => {
+  buyAutoGenerator = (type) => {
     if (!this.canBuyAutoGenerator(type)) {
-      return;
+      return
     }
     switch (type) {
-      case "ERRAND_BOY":
-        this.autoGenerators.errandBoy++;
-        this.money -= this.autoGenerators.errandBoyCost;
+      case 'ERRAND_BOY':
+        this.autoGenerators.errandBoy++
+        this.money -= this.autoGenerators.errandBoyCost
         this.autoGenerators.errandBoyCost += Math.floor(
           (this.autoGenerators.errandBoyCost / 100) * 10
-        );
-        return;
-      case "FOREMAN":
-        this.autoGenerators.foreman++;
-        this.money -= this.autoGenerators.foremanCost;
+        )
+        return
+      case 'FOREMAN':
+        this.autoGenerators.foreman++
+        this.money -= this.autoGenerators.foremanCost
         this.autoGenerators.foremanCost += Math.floor(
           (this.autoGenerators.foremanCost / 100) * 10
-        );
-        return;
-      case "MASTER":
-        this.autoGenerators.master++;
-        this.money -= this.autoGenerators.masterCost;
+        )
+        return
+      case 'MASTER':
+        this.autoGenerators.master++
+        this.money -= this.autoGenerators.masterCost
         this.autoGenerators.masterCost += Math.floor(
           (this.autoGenerators.masterCost / 100) * 10
-        );
-        return;
+        )
+        return
       default:
-        return false;
+        return false
     }
-  };
+  }
 
   increasePrice = () => {
-    this.price += 1;
-  };
+    this.price += 1
+  }
 
   decreasePrice = () => {
     if (this.price === 1) {
-      return;
+      return
     }
-    this.price -= 1;
-  };
+    this.price -= 1
+  }
 }
 
-export default Game;
+export default Game
