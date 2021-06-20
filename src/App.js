@@ -1,30 +1,30 @@
-import React from "react";
-import "./App.css";
-import Game from "./game";
+import React from 'react'
+import './App.css'
+import Game from './game'
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
-    this.game = new Game();
+    super(props)
+    this.state = {}
+    this.game = new Game()
   }
 
   componentDidMount() {
     setInterval(() => {
-      this.game.update();
-      this.setState({});
-    }, 100);
+      this.game.update()
+      this.setState({})
+    }, 100)
   }
 
   update = () => {
-    this.game.update();
-  };
+    this.game.update()
+  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">ÇOCUK ADAM - Çig Köfte Diyarı</header>
-        <div style={{ marginBottom: "12px" }}>
+        <div style={{ marginBottom: '12px' }}>
           Çig Köfte: {this.game.manufacturedCigKofte} <br />
           <button
             disabled={!this.game.canMakeCigKofte()}
@@ -39,7 +39,7 @@ class App extends React.Component {
           <div>
             <table>
               <tr>
-                <td style={{ width: "150px" }}>Kasadaki para:</td>
+                <td style={{ width: '150px' }}>Kasadaki para:</td>
                 <td>{this.game.money}₺</td>
               </tr>
               <tr>
@@ -52,13 +52,13 @@ class App extends React.Component {
                   {this.game.price}₺
                   <button
                     disabled={!this.game.canDecreasePrice()}
-                    style={{ marginLeft: "20px" }}
+                    style={{ marginLeft: '20px' }}
                     onClick={this.game.decreasePrice}
                   >
                     -
                   </button>
                   <button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                     onClick={this.game.increasePrice}
                   >
                     +
@@ -71,12 +71,12 @@ class App extends React.Component {
               </tr>
             </table>
           </div>
-          <div style={{ marginTop: "16px" }}>
+          <div style={{ marginTop: '16px' }}>
             <div>Üretim</div>
             <hr />
             <table>
               <tr>
-                <td style={{ width: "150px" }}>Çiğ köfte / dakika:</td>
+                <td style={{ width: '150px' }}>Çiğ köfte / dakika:</td>
                 <td>{this.game.lastManufacturedRate}</td>
               </tr>
               <tr>
@@ -84,7 +84,7 @@ class App extends React.Component {
                 <td>
                   {this.game.material} gr
                   <button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: '10px' }}
                     disabled={!this.game.canBuyMaterial()}
                     onClick={this.game.buyMaterial}
                   >
@@ -97,16 +97,16 @@ class App extends React.Component {
                 <td>
                   {this.game.hasAutoBuyer ? (
                     <React.Fragment>
-                      {this.game.isAutoBuyerActive ? "Aktif" : "Durdu"}
+                      {this.game.isAutoBuyerActive ? 'Aktif' : 'Durdu'}
                       <button
-                        style={{ marginLeft: "10px" }}
+                        style={{ marginLeft: '10px' }}
                         onClick={
                           this.game.isAutoBuyerActive
                             ? this.game.stopAutoBuyer
                             : this.game.startAutoBuyer
                         }
                       >
-                        {this.game.isAutoBuyerActive ? "Durdur" : "Devam et"}
+                        {this.game.isAutoBuyerActive ? 'Durdur' : 'Devam et'}
                       </button>
                     </React.Fragment>
                   ) : (
@@ -114,7 +114,7 @@ class App extends React.Component {
                       Yok
                       {this.game.didUnlockAutoBuyer() && (
                         <button
-                          style={{ marginLeft: "10px" }}
+                          style={{ marginLeft: '10px' }}
                           disabled={!this.game.canBuyAutoBuyer()}
                           onClick={this.game.buyAutoBuyer}
                         >
@@ -126,20 +126,20 @@ class App extends React.Component {
                 </td>
               </tr>
             </table>
-            <div style={{ marginTop: "16px" }}>
+            <div style={{ marginTop: '16px' }}>
               <div>Çalışan:</div>
               <hr />
               <table>
                 <tr>
                   <td>Çırak:</td>
-                  <td style={{ width: "50px", textAlign: "center" }}>
+                  <td style={{ width: '50px', textAlign: 'center' }}>
                     {this.game.autoGenerators.errandBoy}
                   </td>
                   <td>
                     <button
-                      style={{ marginLeft: "10px" }}
-                      disabled={!this.game.canBuyAutoGenerator("ERRAND_BOY")}
-                      onClick={() => this.game.buyAutoGenerator("ERRAND_BOY")}
+                      style={{ marginLeft: '10px' }}
+                      disabled={!this.game.canBuyAutoGenerator('ERRAND_BOY')}
+                      onClick={() => this.game.buyAutoGenerator('ERRAND_BOY')}
                     >
                       Satın Al! ({this.game.autoGenerators.errandBoyCost}₺)
                     </button>
@@ -147,14 +147,14 @@ class App extends React.Component {
                 </tr>
                 <tr>
                   <td>Kalfa:</td>
-                  <td style={{ width: "50px", textAlign: "center" }}>
+                  <td style={{ width: '50px', textAlign: 'center' }}>
                     {this.game.autoGenerators.foreman}
                   </td>
                   <td>
                     <button
-                      style={{ marginLeft: "10px" }}
-                      disabled={!this.game.canBuyAutoGenerator("FOREMAN")}
-                      onClick={() => this.game.buyAutoGenerator("FOREMAN")}
+                      style={{ marginLeft: '10px' }}
+                      disabled={!this.game.canBuyAutoGenerator('FOREMAN')}
+                      onClick={() => this.game.buyAutoGenerator('FOREMAN')}
                     >
                       Satın Al! ({this.game.autoGenerators.foremanCost}₺)
                     </button>
@@ -162,14 +162,14 @@ class App extends React.Component {
                 </tr>
                 <tr>
                   <td>Usta:</td>
-                  <td style={{ width: "50px", textAlign: "center" }}>
+                  <td style={{ width: '50px', textAlign: 'center' }}>
                     {this.game.autoGenerators.master}
                   </td>
                   <td>
                     <button
-                      style={{ marginLeft: "10px" }}
-                      disabled={!this.game.canBuyAutoGenerator("MASTER")}
-                      onClick={() => this.game.buyAutoGenerator("MASTER")}
+                      style={{ marginLeft: '10px' }}
+                      disabled={!this.game.canBuyAutoGenerator('MASTER')}
+                      onClick={() => this.game.buyAutoGenerator('MASTER')}
                     >
                       Satın Al! ({this.game.autoGenerators.masterCost}₺)
                     </button>
@@ -180,11 +180,11 @@ class App extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
 
 // 1 cig kofte
 // 1 lira = talep tavan = 100%
